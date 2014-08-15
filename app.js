@@ -64,4 +64,19 @@ var server = app.listen(app.get('port'), function() {
   debug('Express server listening on port ' + server.address().port);
 });
 
+var io = require('socket.io')(server);
+
+// SOX
+io.on('connection', function (socket) {
+    socket.emit('added user', {});
+
+    socket.on('moved-event', function (data) {
+        console.log('someone moved!' + '\n' + JSON.stringify(data));
+        socket.emit('move response', data);
+    });
+
+});
+
+
+
 module.exports = app;

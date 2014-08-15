@@ -12,6 +12,98 @@
 
 <script type="text/javascript" src='/javascripts/index-pagescript.js'></script>
 
+<script src="/socket.io/socket.io.js"></script>
+<script src="https://cdn.socket.io/socket.io-1.0.4.js"></script>
+<script>
+var myID;
+var myImage;
+	var bassData = {
+		id: myID,
+		image: myImage,
+		position: {
+			x: 0,
+			y: 0
+		}
+	};
+
+	$(function () {
+		bassData.myID = randomString();
+		bassData.myImage = randomImage();
+	})
+
+	var socket = io.connect();
+
+	var possibleImages = [
+		"/images/bass/bass__jurassic_park.gif",
+		"/images/bass/bass_windows.gif",
+		"/images/bass/bass_dolls.gif",
+		"/images/bass/bass_bootstrap.gif",
+		"/images/bass/bass_eclipse.gif",
+		"/images/bass/bass_beesandbombs.gif",
+		"/images/bass/bass_daily_task.gif",
+		"/images/bass/bass_tje.gif",
+		"/images/bass/bass_city.gif",
+		"/images/bass/bass_badblueprints.gif"
+	];
+
+	//generates a unique ID for each user. 
+	function randomString(){
+	var randString = "";
+	var possibleLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	for (var i = 0 ; i < 8; i++){
+		var index = parseInt(Math.random()*possibleLetters.length);
+		var randLetter = possibleLetters.charAt(index);
+			randString+=randLetter;
+		}
+		return randString;
+	}
+
+	//choose a random image
+	function randomImage(){
+		var index = parseInt(Math.random()*possibleImages.length);
+		return possibleImages[index];
+	}
+
+	var lastMove = 0;
+	var eventThrottle = 1000;
+
+	$(document).click(function(event) {
+		bassData.position = {
+			x : event.clientX,
+			y : event.clientY
+		};
+		socket.emit('moved-event', bassData);
+	});
+
+	socket.on('added user', function (data) {
+		console.log("user added");
+	});
+
+	socket.on('move response', function (data) {
+		console.log("data:" + JSON.stringify(data)); 
+		console.log("bassData:" + JSON.stringify(bassData)); 
+
+		var picElement = $("#" + data.myID);
+
+		// If there's already an html element
+		if (picElement.length > 0){
+			picElement.animate({
+				left : data.position.x,
+				top: data.position.y
+			}, 1000, "linear");
+
+		// Else make one
+		} else {
+			
+			var el = $("<div></div>").appendTo($("#container")).attr({"id" : data.myID, "class" : "partyGoer"});
+			el.append("<img src ='" + data.myImage + "'>");
+			// el.append("<audio src='../static/sounds/" + data.sound + "' autoplay loop preload='auto'>");
+			// el.append(data.text).html();
+		}
+	});
+
+</script>
+
 <link href="/stylesheets/style.css" type="text/css" rel="stylesheet" />
 
 </head>
@@ -20,6 +112,9 @@
 <!-- 	<video autoplay loop poster="images/bkg-loading.png" id="bgvid">
 		<source src="images/simple_sidescroll_longer_blue.mp4" type="video/mp4">
 	</video> -->
+
+	<div id="container">
+  	</div>
 
 	<div id="riptide">
 		<!-- <img src="images/bkg-scrolling-img.png"></img> -->

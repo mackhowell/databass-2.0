@@ -1,6 +1,3 @@
-
-console.log('hihi pagescript');
-
 $(function() {
 	// Try with just jquery animation
 	// function loop() {
@@ -38,5 +35,4 @@ $(function() {
 
 	// 	});
 	// }, 10);
-
 });
