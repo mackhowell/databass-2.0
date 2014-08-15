@@ -66,14 +66,49 @@ var server = app.listen(app.get('port'), function() {
 
 var io = require('socket.io')(server);
 
+var users = {};
+
 // SOX
 io.sockets.on('connection', function (socket) {
-    io.sockets.emit('added user', {});
+    var addedUser = false;
+    // users[user] = user;
+    // io.sockets.emit('added user', {});
 
-    socket.on('moved-event', function (data) {
-        console.log('someone moved!' + '\n' + JSON.stringify(data));
-        io.sockets.emit('move response', data);
+    socket.on('moved-event', function (bassData) {
+
+        // console.log('someone moved!' + '\n' + JSON.stringify(bassData));
+        
+        io.sockets.emit('move response', bassData);
+
+        // socket.bassData = bassData;
+        // users[bassData] = bassData;
+
+        addedUser = true;
+
+        // console.log('users++ = '+ JSON.stringify(users));
+        // socket.set('username', data.myID, function() {
+        //     users[data.myID] = data.myID;
+        // });
+
+        // users[user] = data;
+        // console.log('users = ' + users);
     });
+
+    socket.on('disconnect', function () {
+
+        io.sockets.emit('delete gif', {});
+        // console.log("user disconnected");
+        // if (addedUser) {
+        //     delete users[socket.bassData];
+        //     console.log('users-- = ' + JSON.stringify(users));
+        // }
+        
+        // socket.get('username', function(err, user) {   
+        //     delete users[user];
+        //     io.sockets.emit('delete gif', user);
+        // });
+    });
+
 
 });
 

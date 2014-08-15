@@ -78,9 +78,9 @@ var bassData = {
 		socket.emit('moved-event', bassData);
 	});
 
-	socket.on('added user', function (data) {
-		console.log("user added");
-	});
+	// socket.on('added user', function (data) {
+	// 	console.log("user added");
+	// });
 
 	socket.on('move response', function (data) {
 		console.log("data:" + JSON.stringify(data)); 
@@ -110,6 +110,13 @@ var bassData = {
 			// el.append("<audio src='../static/sounds/" + data.sound + "' autoplay loop preload='auto'>");
 			// el.append(data.text).html();
 		}
+	});
+
+	socket.on('delete gif', function () {
+		var picElement = $("#" + bassData.myID);
+		// var element = document.getElementById("element-id");
+		picElement.outerHTML = "";
+		delete picElement;
 	});
 
 </script>
