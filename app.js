@@ -67,12 +67,12 @@ var server = app.listen(app.get('port'), function() {
 var io = require('socket.io')(server);
 
 // SOX
-io.on('connection', function (socket) {
-    socket.emit('added user', {});
+io.sockets.on('connection', function (socket) {
+    io.sockets.emit('added user', {});
 
     socket.on('moved-event', function (data) {
         console.log('someone moved!' + '\n' + JSON.stringify(data));
-        socket.emit('move response', data);
+        io.sockets.emit('move response', data);
     });
 
 });

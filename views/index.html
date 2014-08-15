@@ -11,20 +11,23 @@
 <!-- <script type="text/paperscript" src='/javascripts/paper.js' canvas="myCanvas"></script> -->
 
 <script type="text/javascript" src='/javascripts/index-pagescript.js'></script>
+<link href="/stylesheets/style.css" type="text/css" rel="stylesheet" />
 
 <script src="/socket.io/socket.io.js"></script>
 <script src="https://cdn.socket.io/socket.io-1.0.4.js"></script>
 <script>
+
 var myID;
 var myImage;
-	var bassData = {
-		id: myID,
-		image: myImage,
-		position: {
-			x: 0,
-			y: 0
-		}
-	};
+
+var bassData = {
+	// id: myID,
+	// image: myImage,
+	// position: {
+	// 	x: 0,
+	// 	y: 0
+	// }
+};
 
 	$(function () {
 		bassData.myID = randomString();
@@ -86,15 +89,22 @@ var myImage;
 		var picElement = $("#" + data.myID);
 
 		// If there's already an html element
+		// Make this a boolean statement? See if this if() is getting called.
+		// Its probably not cause this is where we'd move the other bass in the dom.
 		if (picElement.length > 0){
 			picElement.animate({
 				left : data.position.x,
 				top: data.position.y
-			}, 1000, "linear");
+			}, 1000, "linear", function () {
+				console.log('animated picElement from move response! (moving old bass)');
+			});
 
 		// Else make one
+		// Is this getting called? a new bass is supposed to be made if picElement > 0 || !picElement.
+		// This is the only place where bass are made so it is?
+		// Yes this is called i.e. $( "#LNINQOHO" ).hasClass( "partyGoer" ); === true;
 		} else {
-			
+			console.log('inside else statement from move response! (adding new bass)');
 			var el = $("<div></div>").appendTo($("#container")).attr({"id" : data.myID, "class" : "partyGoer"});
 			el.append("<img src ='" + data.myImage + "'>");
 			// el.append("<audio src='../static/sounds/" + data.sound + "' autoplay loop preload='auto'>");
@@ -103,8 +113,6 @@ var myImage;
 	});
 
 </script>
-
-<link href="/stylesheets/style.css" type="text/css" rel="stylesheet" />
 
 </head>
 <body>
@@ -118,6 +126,10 @@ var myImage;
 
 	<div id="riptide">
 		<!-- <img src="images/bkg-scrolling-img.png"></img> -->
+	</div>
+
+	<div id="databass-title-gif">
+		<img src="images/WWWDATABASSB_06005.gif"></img>
 	</div>
 
 	  <div id="background-animation-container">

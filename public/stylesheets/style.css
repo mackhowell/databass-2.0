@@ -30,6 +30,13 @@
   cursor: pointer;
 }
 
+#databass-title-gif {
+  top: 10%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto
+}
+
 /*#chat-text {
   overflow: auto;
   height: 500px;
