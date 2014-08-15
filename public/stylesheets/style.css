@@ -1,24 +1,25 @@
-/*body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-}*/
 
-/*a {
-  color: #00B7FF;
-}*/
-
-/* for jquery animation */
-/*div {
-	position: absolute;
-}*/
-
-video#bgvid {
+/*video#bgvid {
   position: fixed; right: 0; bottom: 0;
   min-width: 100%; min-height: 100%;
   width: auto; height: auto; z-index: -100;
   background: url(../images/bkg-loading.png) no-repeat;
   background-size: cover;
   z-index: -1000; 
+}*/
+
+#riptide {
+  position: absolute;
+  z-index:-1000;
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
+  top:-10px;
+  left:-10px;
+  background-image: url('../images/bkg-scrolling-img.png');
+  -webkit-animation: bkgrndmove 2s linear infinite;
+  -moz-animation: bkgrndmove 2s linear infinite;
+  animation: bkgrndmove 2s linear infinite;
 }
 
 #background-animation-container {
@@ -180,9 +181,30 @@ video#bgvid {
   animation-duration: 13s;
 }
 
+/*  ----  bkgrndmove  ----  */
+@-webkit-keyframes bkgrndmove {
+/*  from { transform: translateX(-40%); }
+  to { transform: translateX(10%); }*/
+  from {background-position: -800px 0;}
+  to {background-position: 1800px 0;}
+}
+
+@-moz-keyframes bkgrndmove{
+/*  from { transform: translateX(-40%); }
+  to { transform: translateX(10%); }*/
+  from {background-position: -800px 0;}
+  to {background-position: 1800px 0;}
+}
+
+@keyframes bkgrndmove {
+/*  from { transform: translateX(-40%); }
+  to { transform: translateX(10%); }*/
+  from {background-position: -800px 0;}
+  to {background-position: 1800px 0;}
+}
 
 
-/*  ----  Something is weird here!!!  ----  */
+/*  ----  gifmove  ----  */
 
 @-webkit-keyframes gifmove {
   from { transform: translateX(-30%); }
